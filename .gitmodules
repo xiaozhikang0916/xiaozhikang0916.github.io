@@ -1,3 +1,4 @@
 [submodule "themes/maupassant"]
 	path = themes/maupassant
 	url = https://github.com/xiaozhikang0916/maupassant-hexo.git
+	branch = config
