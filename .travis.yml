@@ -1,0 +1,30 @@
+language: node_js
+node_js:
+  - "12"
+sudo: required
+
+cache:
+  directories:
+    - node_modules
+
+branches:
+  only:
+    - blog-src
+
+
+before_install:
+  - npm install -g hexo-cli
+
+
+install:
+  - npm install
+  - npm install https://github.com/xiaozhikang0916/hexo-deployer-git.git --save
+
+
+script:
+  - hexo clean
+  - hexo generate
+
+
+after_script:
+  - hexo deploy
