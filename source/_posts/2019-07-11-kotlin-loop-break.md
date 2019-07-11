@@ -166,3 +166,5 @@ dataList.asSequence()
         yourBiz(it)
     }
 ```
+
+Java 1.8 后提供的 `stream` 流也有上述类似的概念，本文也可供参考。
