@@ -69,7 +69,32 @@ assertEquals(3, before) // FAILED!!! actually 5
 
 这是 `Continue` ， 不是 `break`。
 
-### 2. 不提供不需要处理的数据
+### 2. 暴力中断
+
+`break` 中断本质是想要从循环体中直接退出到循环外，那么最简单的办法...
+
+```kotlin
+class LoopBreakException: Throwable()
+
+val data = List(5) { it.toString() }
+var before = 0
+var after = 0
+try {
+    data.forEach {
+        before += 1
+        if (it.toInt() > 2)
+        throw LoopBreakException()
+        after += 1
+    }
+} catch (e: LoopBreakException) {
+}
+assertEquals(4, before)
+assertEquals(3, after)
+```
+
+又不是不能用.jpg ，系统中断不也是这个思路吗？
+
+### 3. 不提供不需要处理的数据
 
 既然 *不处理不想要的数据* 行不通，那么我们应当换一个思路，考虑 *不提供不需要处理的数据* 这种做法。
 
