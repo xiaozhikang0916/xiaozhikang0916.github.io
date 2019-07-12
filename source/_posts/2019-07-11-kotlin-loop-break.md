@@ -16,7 +16,7 @@ data.forEach {
 }
 ```
 
-但是，随着业务发展，我发现需要在以前的 `forEach` 循环中加入条件，满足某些条件后直接退出循环，说人话就是需要一个 `break` 关键字。
+但是，随着业务发展，我发现需要在以前的 `forEach` 循环中加入条件，满足某些条件后直接退出循环，也就是说需要一个 `break` 关键字。
 
 ## `forEach` 有没有 `break`
 
@@ -82,8 +82,9 @@ var after = 0
 try {
     data.forEach {
         before += 1
-        if (it.toInt() > 2)
-        throw LoopBreakException()
+        if (it.toInt() > 2) {
+            throw LoopBreakException()
+        }
         after += 1
     }
 } catch (e: LoopBreakException) {
