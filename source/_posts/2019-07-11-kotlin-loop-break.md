@@ -1,7 +1,11 @@
 ---
 title: "Kotlin 中 forEach 的中断"
 date: 2019-07-11 18:37:08
-tags: kotlin forEach java stream
+tags: 
+    - kotlin
+    - forEach
+    - java 
+    - stream
 ---
 
 ## 想要一个 `break`
