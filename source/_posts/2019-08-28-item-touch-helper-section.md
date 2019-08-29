@@ -1,5 +1,5 @@
 ---
-title: item-touch-helper-section
+title: ItemTouchHelper实现拖动分组与定制
 date: 2019-08-28 17:52:55
 tags:
     - Android
