@@ -111,6 +111,27 @@ override fun chooseDropTarget(
 
 > 在使用kotlin时，切记要在重载方法时，将返回类型改为可空 `RecyclerView.ViewHolder?` ，以节约一次编译时间。
 
+#### Updated
+
+除了 `chooseDragTarget` ，我们还可以选择另一个方法实现拖动范围的限制：
+
+```java
+public boolean canDropOver(RecyclerView recyclerView, ViewHolder current,
+                ViewHolder target)
+```
+
+其作用是在拖动到其他项上方时，判断能不能释放在这些其他项的位置上。只有通过 `canDropOver` 筛选的 `ViewHolder` 才会出现在 `chooseDropTarget` 的 `dropTargets` 列表中。所以这个方法更适合做针对每一项的筛选操作：
+
+```kotlin
+override fun canDropOver(
+    recyclerView: RecyclerView,
+    current: RecyclerView.ViewHolder,
+    target: RecyclerView.ViewHolder
+): Boolean {
+    return isSameSection(current, target)
+}
+```
+
 ### 拖动阴影
 
 在 `RecyclerView` 中，列表项的布局和绘制顺序一般来说是从上到下的，如果不加任何限制，可能会出现的情况是：
