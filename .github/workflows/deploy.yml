@@ -1,0 +1,28 @@
+name: Deploy Blog Page
+on: push
+
+jobs:
+  deploy:
+    name: deploy job
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: 12.x
+    - name: check
+      env:
+        GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+      run: if [ -z $GIT_TOKEN ]; then echo 'empty token'; fi
+    - name: before_install
+      run: npm -g install hexo-cli
+    - name: install
+      run: npm install |
+           npm install https://github.com/xiaozhikang0916/hexo-deployer-git.git --save
+    - name: generate
+      run: hexo clean |
+           hexo generate
+    - name: deploy
+      env:
+        GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+      run: hexo deploy
