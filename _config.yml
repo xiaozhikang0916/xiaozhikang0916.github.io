@@ -81,8 +81,9 @@ theme: maupassant
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/xiaozhikang0916/xiaozhikang0916.github.io.git
+  repo: 
+    url: https://github.com/xiaozhikang0916/xiaozhikang0916.github.io.git
+    token: $GIT_TOKEN
   name: xzk-travis
   email: xiaozhikang0916@gmail.com
   branch: master
-  token: $GIT_TOKEN
