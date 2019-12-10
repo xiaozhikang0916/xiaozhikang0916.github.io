@@ -18,7 +18,7 @@ jobs:
       run: npm -g install hexo-cli
     - name: install
       run: npm install |
-           npm install https://github.com/xiaozhikang0916/hexo-deployer-git.git --save
+           npm install hexo-deployer-git --save
     - name: generate
       run: hexo clean |
            hexo generate
