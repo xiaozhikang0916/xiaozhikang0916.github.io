@@ -83,8 +83,6 @@ deploy:
   type: git
   repo: 
     url: https://github.com/xiaozhikang0916/xiaozhikang0916.github.io.git
-    branch: page-test
     token: $GIT_TOKEN
   name: xzk-travis
   email: xiaozhikang0916@gmail.com
-  branch: master
