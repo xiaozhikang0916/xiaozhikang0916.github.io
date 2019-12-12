@@ -7,13 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+      with:
+        submodules: true
     - uses: actions/setup-node@master
       with:
         node-version: 12.x
-    - name: check
-      env:
-        GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
-      run: if [ -z $GIT_TOKEN ]; then echo 'empty token'; fi
     - name: install_hexo
       run: npm -g install hexo-cli@^3.1.0
     - name: install_deployer
