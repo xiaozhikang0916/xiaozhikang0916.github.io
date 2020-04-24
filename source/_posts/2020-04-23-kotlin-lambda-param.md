@@ -1,5 +1,5 @@
 ---
-title: kotlin-lambda-param
+title: kotlin 中传入形参、返回不匹配的 lambda 表达式
 date: 2020-04-23 21:42:52
 tags:
     - kotlin
