@@ -219,13 +219,57 @@ class ClickItemViewHolder(itemView: View, onCheck: ((Int, Boolean) -> Unit)) :
 
 在这里，需要在动画过程中禁用点击的 viewHolder 自行实现接口 `OnItemAnimationListener` ，根据其传入参数设置标记位；在实际点击事件中判断标记位属性值，来决定是否需要发起业务逻辑。这样需要修改的代码量少，同时也不会对原有的业务逻辑产生影响。
 
+### 使用 TAG 暂存点击属性，遍历子view（更新）
+
+（后续更新）
+
+在项目中使用了方法 3 之后，我仍在思考有没有更加方便地结局问题的办法。方法 2 其原本的弊端在于不能在恢复点击时将全部子 view 都设置成可点击的，需要有一个方便取用的位置记录其原本的属性，其实有一个方便的位置，即存在 view 的 tag 里面：
+
+```kotlin
+class TagAnimator : DefaultItemAnimator() {
+
+    override fun onChangeStarting(item: RecyclerView.ViewHolder?, oldItem: Boolean) {
+        item?.itemView?.let(::setTag)
+        super.onChangeStarting(item, oldItem)
+    }
+
+    override fun onChangeFinished(item: RecyclerView.ViewHolder?, oldItem: Boolean) {
+        item?.itemView?.let(::restoreTag)
+        super.onChangeFinished(item, oldItem)
+    }
+
+    private fun setTag(view: View) {
+        val clickable = view.isClickable
+        view.setTag(R.id.tag_id, clickable)
+        view.isClickable = false
+        iteratorView(view, ::setTag)
+    }
+
+    private fun restoreTag(view: View) {
+        val clickable = view.getTag(R.id.tag_id)
+        view.isClickable = clickable as? Boolean ?: false
+        iteratorView(view, ::restoreTag)
+    }
+
+    private fun iteratorView(view: View, action: ((View) -> Unit)) {
+        if (view is ViewGroup) {
+            view.children.forEach(action)
+        }
+    }
+}
+```
+
+这种方法能快速地应用到需要使用的地方，不需要对业务 viewHolder 进行额外的修改，但是失去了可定制性。我认为在使用上跟方法 3 是不相上下的。
+
 ## 示例demo
 
 我把上面的问题与解决做成了一个 demo 项目：[ItemAnimatorBlockClick](https://github.com/xiaozhikang0916/ItemAnimatorBlockClick)。
 
-在页面底部点击 `Default Fragment` 按钮可以显示原本有问题的页面，点击一个 `Check` 按钮后，对应列表项将会开始替换动画（动画时间被延长到 1.5s 方便观察）；在动画过程中再次点击同一个按钮，将会看到一个 `error` 的 log 输出，因为传入的状态与数据中存有的状态不符，并且按钮动画消失，马上转变回原有的样子。
+在页面底部点击 `Default` 按钮可以显示原本有问题的页面，点击一个 `Check` 按钮后，对应列表项将会开始替换动画（动画时间被延长到 1.5s 方便观察）；在动画过程中再次点击同一个按钮，将会看到一个 `error` 的 log 输出，因为传入的状态与数据中存有的状态不符，并且按钮动画消失，马上转变回原有的样子。
 
-`Click Fragment` 按钮可以显示经过修复的页面，重复上述操作会发现在动画过程中，重复的点击事件不会被响应，也不会看到 `error` 的 log 输出，直到动画播放完成后才能正确响应下一次点击。
+`Click` 按钮可以显示使用方法 3 修复的页面，重复上述操作会发现在动画过程中，重复的点击事件不会被响应，也不会看到 `error` 的 log 输出，直到动画播放完成后才能正确响应下一次点击。
+
+`Tag`  按钮可以显示使用方法 4 修复的页面，其表现与前一个页面没有区别。
 
 ## 后文
 
