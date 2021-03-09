@@ -15,7 +15,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://xiaozhikang0916.github.io
+url: https://blog.xiaozk.site/
 root: /
 permalink: blog/:title/
 permalink_defaults:
@@ -34,7 +34,6 @@ skip_render:
 new_post_name: :year-:month-:day-:title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
-external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
 post_asset_folder: false

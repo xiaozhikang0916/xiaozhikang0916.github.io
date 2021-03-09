@@ -13,10 +13,10 @@ jobs:
       with:
         node-version: 12.x
     - name: install_hexo
-      run: npm -g install hexo-cli@^3.1.0
+      run: npm -g install hexo-cli@^4.2.0
     - name: install_deployer
       run: npm install |
-           npm install hexo-deployer-git@^2.1.0 --save
+           npm install hexo-deployer-git@^3.0.0 --save
     - name: generate
       run: hexo clean |
            hexo generate
