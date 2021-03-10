@@ -429,4 +429,6 @@ class ViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
 在平时的开发中，我其实挺少使用 `View.setTag` 方法，认为这个东西比较古老，还可能容易引起内存问题；但是在这个场景下，合理的使用 `setTag` 其实很能快速地解决我们的问题。
 
-示例项目已经在 Github 上开源，[项目地址](https://github.com/xiaozhikang0916/Recyclerview-ani)，可以在侧边栏中分别进入普通实现版本 (`Common Decoration`) 和 Tag 实现版本 (`Tag Decoration`) ，点击 `ADD` `REMOVE` 按钮观察其表现。
+示例项目已经在 Github 上开源：[Recyclerview-ani 项目地址](https://github.com/xiaozhikang0916/Recyclerview-ani)。
+
+可以在侧边栏中分别进入普通实现版本 (`Common Decoration`) 和 Tag 实现版本 (`Tag Decoration`) ，点击 `ADD` `REMOVE` 按钮观察其表现。
