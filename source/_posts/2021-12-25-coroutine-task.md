@@ -148,6 +148,8 @@ suspend fun startMainTask() {
 
 #### All succeed
 
+UI: `Succeed`
+
 log:
 
 ```log
@@ -166,9 +168,9 @@ I/TaskLog: Task 4 success, returning
 I/TaskLog: Last task result 4
 ```
 
-UI: `Succeed`
-
 #### 1~3 失败
+
+UI: `1 is failed`
 
 log:
 
@@ -182,43 +184,12 @@ I/TaskLog: Task 2 cancelled by others
     kotlinx.coroutines.JobCancellationException: Parent job is Cancelling; job=ScopeCoroutine{Cancelling}@93967da
     Caused by: site.xiaozk.demo.coroutine_task.TaskException: 1 is failed
         at site.xiaozk.demo.coroutine_task.MainViewModel.startSubTask(MainViewModel.kt:55)
-        at site.xiaozk.demo.coroutine_task.MainViewModel$startSubTask$1.invokeSuspend(Unknown Source:16)
-        at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-        at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:234)
-        at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:166)
-        at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:398)
-        at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl(CancellableContinuationImpl.kt:432)
-        at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$default(CancellableContinuationImpl.kt:421)
-        at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:519)
-        at kotlinx.coroutines.android.HandlerContext$scheduleResumeAfterDelay$$inlined$Runnable$1.run(Runnable.kt:19)
-        at android.os.Handler.handleCallback(Handler.java:938)
-        at android.os.Handler.dispatchMessage(Handler.java:99)
-        at android.os.Looper.loop(Looper.java:223)
-        at android.app.ActivityThread.main(ActivityThread.java:7656)
-        at java.lang.reflect.Method.invoke(Native Method)
-        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:592)
-        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
+        ...
 I/TaskLog: Task 3 cancelled by others
     kotlinx.coroutines.JobCancellationException: Parent job is Cancelling; job=ScopeCoroutine{Cancelling}@93967da
     Caused by: site.xiaozk.demo.coroutine_task.TaskException: 1 is failed
         at site.xiaozk.demo.coroutine_task.MainViewModel.startSubTask(MainViewModel.kt:55)
-        at site.xiaozk.demo.coroutine_task.MainViewModel$startSubTask$1.invokeSuspend(Unknown Source:16)
-        at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-        at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:234)
-        at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:166)
-        at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:398)
-        at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl(CancellableContinuationImpl.kt:432)
-        at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$default(CancellableContinuationImpl.kt:421)
-        at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:519)
-        at kotlinx.coroutines.android.HandlerContext$scheduleResumeAfterDelay$$inlined$Runnable$1.run(Runnable.kt:19)
-        at android.os.Handler.handleCallback(Handler.java:938)
-        at android.os.Handler.dispatchMessage(Handler.java:99)
-        at android.os.Looper.loop(Looper.java:223)
-        at android.app.ActivityThread.main(ActivityThread.java:7656)
-        at java.lang.reflect.Method.invoke(Native Method)
-        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:592)
-        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
-
+        ...
 ```
 
 需要注意的是，如果并发的任务有成功的，后续的失败不会再将其取消：
@@ -235,26 +206,12 @@ I/TaskLog: Task 3 cancelled by others
     kotlinx.coroutines.JobCancellationException: Parent job is Cancelling; job=ScopeCoroutine{Cancelling}@190857e
     Caused by: site.xiaozk.demo.coroutine_task.TaskException: 2 is failed
         at site.xiaozk.demo.coroutine_task.MainViewModel.startSubTask(MainViewModel.kt:55)
-        at site.xiaozk.demo.coroutine_task.MainViewModel$startSubTask$1.invokeSuspend(Unknown Source:16)
-        at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-        at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:234)
-        at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:166)
-        at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:398)
-        at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl(CancellableContinuationImpl.kt:432)
-        at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$default(CancellableContinuationImpl.kt:421)
-        at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:519)
-        at kotlinx.coroutines.android.HandlerContext$scheduleResumeAfterDelay$$inlined$Runnable$1.run(Runnable.kt:19)
-        at android.os.Handler.handleCallback(Handler.java:938)
-        at android.os.Handler.dispatchMessage(Handler.java:99)
-        at android.os.Looper.loop(Looper.java:223)
-        at android.app.ActivityThread.main(ActivityThread.java:7656)
-        at java.lang.reflect.Method.invoke(Native Method)
-        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:592)
-        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
-
+        ...
 ```
 
 #### 任务4失败
+
+UI: `4 is failed`
 
 log:
 
@@ -272,8 +229,6 @@ I/TaskLog: Start task of 4
 I/TaskLog: Task 4 random 0
 I/TaskLog: Task 4 failed, throwing
 ```
-
-UI: `4 is failed`
 
 ## 相关阅读
 
